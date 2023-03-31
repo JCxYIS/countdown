@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{TITLE}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+</head>
+<body style="width: 100vw; height: 100vh; overflow: hidden;">    
+    <!-- Main countdown -->
+    <h1 style="font-size:1em; text-align: center;" id="title">{TITLE}</h1>
+    <div style="position: fixed; top: 10%; bottom: 0; width: 100%; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <h2 id="time" style="font-size:4em;">00:00:00</h2>
+    </div>
+
+    <!-- Config screen -->
+    <!-- TODO -->
+</body>
+
+<!-- Params -->
+<script>
+    var params = new URL(document.URL).searchParams;
+
+    // 參數 params
+    var TIME = params.get('time') ?? "2024-01-01T00:00:00";
+    var TITLE = params.get('title') ?? "距離 2024 還有";
+    var TITLEPASSED = params.get('titlePassed') ?? "歡迎來到 2024";
+
+    // styling params
+    var COLOR = params.get('color') ?? '#ff1111'
+    var BGCOLOR = params.get('bg') ?? 'black'
+    var COLOR_PASSED = params.get('colorPassed') ?? COLOR
+    var BGCOLOR_PASSED = params.get('bgPassed') ?? BGCOLOR
+</script>
+
+<!-- Update Countdown -->
+<script>
+    var timedest = new Date(TIME)
+    var titleHtml = document.getElementById("title")
+    var timeHtml = document.getElementById("time")
+    function update()
+    {        
+        let timedelta = Math.abs(timedest - Date.now()) / 1000
+        let isPassed = Date.now() >= timedest
+
+        // render time        
+        let h = Math.floor(timedelta / 3600)         // Math.floor 無條件捨去
+        let m = Math.floor((timedelta % 3600) / 60)
+        let s = Math.floor(timedelta % 3600 % 60)
+        let countdownStr = pad0(h) +":"+ pad0(m) +":"+ pad0(s)
+        timeHtml.innerHTML = countdownStr;  
+        
+        // title
+        let title = isPassed ? TITLEPASSED : TITLE
+        titleHtml.innerHTML = title
+        document.title = `${title} ${countdownStr}`
+        
+        // animation
+        anime.timeline({loop: false})
+        .add({
+          targets: '#time',
+          opacity: 0,
+          scale: 5,
+          duration: 60
+        })
+        .add({
+          targets: '#time',
+          opacity: 1,
+          scale: 1,
+          duration: 620
+        }).add({
+          targets: '#time',
+          opacity: 0,
+          scale: 0.2,
+          duration: 320,
+          easing: "easeInExpo"
+        })
+
+        // styling
+        document.body.style.color = isPassed ? COLOR_PASSED : COLOR
+        document.body.style.background = isPassed ? BGCOLOR_PASSED : BGCOLOR
+
+        // loop
+        setTimeout(update, 1000);
+    }
+
+    function pad0(val)
+    {
+        if(val < 10)
+            return "0"+val
+        else
+            return ""+val
+    }
+    
+    update();
+
+</script>
+
+<!-- CSS -->
+<style>
+body {
+  font-size: 4vw;
+}
+
+@media (min-aspect-ratio: 4) {
+  body {
+    font-size: 15vh;
+  }
+}
+</style>
+
+</html>
