@@ -25,12 +25,14 @@
     var TIME = params.get('time') ?? "2024-01-01T00:00:00";
     var TITLE = params.get('title') ?? "距離 2024 還有";
     var TITLEPASSED = params.get('titlePassed') ?? "歡迎來到 2024";
+    var OVERFLOW = params.get('overflow') !== "false" ?? true;
 
     // styling params
     var COLOR = params.get('color') ?? '#ff1111'
     var BGCOLOR = params.get('bg') ?? 'black'
     var COLOR_PASSED = params.get('colorPassed') ?? COLOR
     var BGCOLOR_PASSED = params.get('bgPassed') ?? BGCOLOR
+
 </script>
 
 <!-- Update Countdown -->
@@ -47,6 +49,9 @@
         let h = Math.floor(timedelta / 3600)         // Math.floor 無條件捨去
         let m = Math.floor((timedelta % 3600) / 60)
         let s = Math.floor(timedelta % 3600 % 60)
+        if(!OVERFLOW && isPassed) {
+          h = 0; m = 0; s = 0;
+        }
         let countdownStr = pad0(h) +":"+ pad0(m) +":"+ pad0(s)
         timeHtml.innerHTML = countdownStr;  
         
@@ -56,7 +61,7 @@
         document.title = `${title} ${countdownStr}`
         
         // animation
-        anime.timeline({loop: false})
+        let tl = anime.timeline({loop: false})
         .add({
           targets: '#time',
           opacity: 0,
@@ -68,19 +73,24 @@
           opacity: 1,
           scale: 1,
           duration: 620
-        }).add({
-          targets: '#time',
-          opacity: 0,
-          scale: 0.2,
-          duration: 320,
-          easing: "easeInExpo"
-        })
+        });        
+        if(OVERFLOW || !isPassed) {
+          tl.add({
+            targets: '#time',
+            opacity: 0,
+            scale: 0.2,
+            duration: 320,
+            easing: "easeInExpo"
+          })
+        }
 
         // styling
         document.body.style.color = isPassed ? COLOR_PASSED : COLOR
         document.body.style.background = isPassed ? BGCOLOR_PASSED : BGCOLOR
 
         // loop
+        if(!OVERFLOW && isPassed)
+          return;
         setTimeout(update, 1000);
     }
 
