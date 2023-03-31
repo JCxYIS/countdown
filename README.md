@@ -1,6 +1,8 @@
 # countdown
 > 爆炸倒數：很無聊很簡單的純 html 小專案，但很好玩。
 
+![](https://i.imgur.com/e8g7ppv.jpg)
+
 ## Usage
 https://jcxyis.github.io/countdown
 
@@ -50,9 +52,9 @@ https://jcxyis.github.io/countdown?time=2023-04-06T00:00&title=期中考爆炸�
 
 
 ## Embed
-```
+```html
 <iframe 
-    width="
+    width="600"
     height="160" 
     style="border: 0;" 
     src="https://jcxyis.github.io/countdown?">
@@ -61,4 +63,5 @@ https://jcxyis.github.io/countdown?time=2023-04-06T00:00&title=期中考爆炸�
 
 e.g. embed in hackmd
 
-![embed in hackmd](https://i.imgur.com/XOpqcUV.png)
+![embed in hackmd](https://i.imgur.com/PWQpsmd.png)
+Demo: https://hackmd.io/-gNpgxaWTMWteZox8USIEw?both
