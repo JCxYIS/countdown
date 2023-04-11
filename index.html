@@ -12,9 +12,6 @@
     <div style="position: fixed; top: 10%; bottom: 0; width: 100%; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
         <h2 id="time" style="font-size:4em;">00:00:00</h2>
     </div>
-
-    <!-- Config screen -->
-    <!-- TODO -->
 </body>
 
 <!-- Params -->
@@ -23,9 +20,9 @@
 
     // 參數 params
     var TIME = params.get('time') ?? "2024-01-01T00:00:00";
-    var TITLE = params.get('title') ?? "距離 2024 還有";
-    var TITLEPASSED = params.get('titlePassed') ?? "歡迎來到 2024";
     var OVERFLOW = params.get('overflow') !== "false" ?? true;
+    var TITLE = params.get('title') ?? "距離 2024 還有";
+    var TITLEPASSED = params.get('titlePassed') ?? overflow ? "歡迎來到 2024" : TITLE;
 
     // styling params
     var COLOR = params.get('color') ?? '#ff1111'

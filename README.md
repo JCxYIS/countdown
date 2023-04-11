@@ -25,6 +25,7 @@ https://jcxyis.github.io/countdown?time=2023-04-06T00:00&title=期中考爆炸�
 ### `titlePassed`
 - 倒數完的說明文字
 - default: `歡迎來到 2024`
+    - notice that if `overflow` is false and this parameter (`titlePassed`) is unset, will default to parameter `title` 
 
 ### `color`
 - 倒數時的字體顏色
