@@ -22,7 +22,7 @@
     var TIME = params.get('time') ?? "2024-01-01T00:00:00";
     var OVERFLOW = params.get('overflow') !== "false" ?? true;
     var TITLE = params.get('title') ?? "距離 2024 還有";
-    var TITLEPASSED = params.get('titlePassed') ?? overflow ? "歡迎來到 2024" : TITLE;
+    var TITLEPASSED = params.get('titlePassed') ?? OVERFLOW ? "歡迎來到 2024" : TITLE;
 
     // styling params
     var COLOR = params.get('color') ?? '#ff1111'
